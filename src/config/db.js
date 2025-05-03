@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize';
 import dotenv from 'dotenv';
+import { empleadoModel } from '../model/empleadoModel.js';
 
 dotenv.config();
 
@@ -11,10 +12,14 @@ const sequelize = new Sequelize(
     }
 );
 
+let empleadosModels = null;
+
 const connection = async () => {
     try {
         await sequelize.authenticate();
         console.log('Conexion a la base de datos exitosa');
+
+        empleadosModels = await empleadoModel(sequelize);
 
         await sequelize.sync();
         console.log('Sincronizacion de la base de datos exitosa');
@@ -26,4 +31,5 @@ const connection = async () => {
 export {
     sequelize,
     connection,
+    empleadosModels,
 }
