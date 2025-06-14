@@ -83,7 +83,7 @@ export const deleteProduct = async (req, res) => {
 }
 
 export const searchProducts = async (req, res) => {
-    const { nombre, marca, categoria, precio } = req.query;
+    const { nombre, marca, categoria, precioMin, precioMax } = req.query;
 
     try {
         const filters = {};
@@ -91,7 +91,12 @@ export const searchProducts = async (req, res) => {
         if (nombre) filters.nombre = { [Op.iLike]: `%${nombre}%` };
         if (marca) filters.marca = { [Op.iLike]: `%${marca}%` };
         if (categoria) filters.categoria = { [Op.iLike]: `%${categoria}%` };
-        if (precio) filters.precio = precio;
+
+        if (precioMin || precioMax) {
+            filters.precio = {};
+            if (precioMin) filters.precio[Op.gte] = parseFloat(precioMin);
+            if (precioMax) filters.precio[Op.lte] = parseFloat(precioMax);
+        }
 
         const products = await productsModel.findAll({ where: filters });
 
@@ -103,3 +108,4 @@ export const searchProducts = async (req, res) => {
         });
     }
 }
+
