@@ -1,11 +1,14 @@
 import express from 'express';
-import { addUser, deleteUser, getAllUsers, updateUser } from '../controller/userController.js';
+import { getProfile, googleLogin, updateProfile } from '../controller/authController.js';
+import { authenticateToken } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-router.get('/users/getAllUsers', getAllUsers);
-router.post('/users/addUser', addUser);
-router.put('/users/updateUser/:id', updateUser);
-router.delete('/users/deleteUser/:id', deleteUser)
+// Ruta auth
+router.post('/auth/google', googleLogin);
+
+// Rutas protegidas de perfil
+router.get('/me', authenticateToken, getProfile);
+router.put('/me', authenticateToken, updateProfile);
 
 export default router;

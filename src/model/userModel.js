@@ -7,19 +7,27 @@ export const userModel = async (sequelize) => {
             autoIncrement: true,
             primaryKey: true,
         },
-        nombre: {
+        username: {
             type: DataTypes.STRING(100),
-            allowNull: false,
+            allowNull: true, 
+        },
+        nombreCompleto: {
+            type: DataTypes.STRING(150),
+            allowNull: true,
         },
         email: {
             type: DataTypes.STRING(100),
             allowNull: false,
             unique: true,
         },
-        password: {
-            type: DataTypes.STRING(100),
-            allowNull: false,
+        picture: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
         },
+        telefono: {
+            type: DataTypes.STRING(20),
+            allowNull: true,
+        }
     }, {
         timestamps: false,
     });
