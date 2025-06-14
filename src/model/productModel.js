@@ -18,7 +18,6 @@ export const productModel = async (sequelize) => {
         categoria: {
             type: DataTypes.STRING(100),
             allowNull: true,
-            unique: true,
         },
         picture: {
             type: DataTypes.STRING(255),
